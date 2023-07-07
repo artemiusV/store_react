@@ -81,7 +81,7 @@ const CartItem = ({ id, title, price, count, imageUrl, size, type }) => {
         </button>
       </div>
       <div className="cart__item-price">
-        <b>{price * count} ₽</b>
+        <b>{price * count} BYN</b>
       </div>
       <div className="cart__item-remove">
         <div
