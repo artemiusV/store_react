@@ -26,11 +26,11 @@ const Home:React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } =
     useSelector(selectFilter);
 
-  const onChangeCategory = React.useCallback((idx:number) => {
+  const onChangeCategory = (idx:number) => {
     dispatch(setCategoryId(idx));
-  }, []);
+  };
 
-  const onChangePage = (page:number) => {
+  const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
@@ -115,7 +115,7 @@ const Home:React.FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
+        <Categories value={categoryId} onChangeCategory={onChangeCategory}  />
         <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
