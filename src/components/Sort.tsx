@@ -1,8 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../redux/slices/filterSlice";
+import { Sort as SortType } from '../redux/slices/filter/types';
 
-export const sortList = [
+
+type SortItem = {
+  name:string;
+  sortProperty:string
+}
+
+type SortPopupProps = {
+  value: SortType;
+};
+
+export const sortList: SortItem[]= [
   { name: "популярности (DESC)", sortProperty: "rating" },
   { name: "популярности (ASC)", sortProperty: "-rating" },
   { name: "цене (DESC)", sortProperty: "price" },
@@ -11,34 +22,31 @@ export const sortList = [
   { name: "алфавиту (ASC)", sortProperty: "-title" },
 ];
 
-export const Sort = React.memo(({ value }) => {
+export const Sort:React.FC<SortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = React.useState(false);
 
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj: SortItem) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
 
   React.useEffect(() => {
-    // console.log("sort !!!mount");
-
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event:any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
-        // console.log("outside");
       }
     };
     document.body.addEventListener("click", handleClickOutside);
 
     return () => {
-      // console.log("sort unmount");
       document.body.removeEventListener("click", handleClickOutside);
     };
   }, []);
+  
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
