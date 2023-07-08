@@ -48,12 +48,6 @@ const pizzaSlice = createSlice({
         state.items = [];
       });
   },
-
-  // extraReducers: {
-  //   [fetchPizzas.fulfilled]: (state, action) => {
-  //     console.log(state);
-  //   },
-  // },
 });
 
 export const selectPizzaData = (state) => state.pizza;
