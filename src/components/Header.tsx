@@ -8,9 +8,11 @@ import { selectCart } from "../redux/slices/cartSlice";
 function Header() {
   const { items, totalPrice } = useSelector(selectCart);
   const location = useLocation();
-  console.log(location, window.location);
 
-  const totalCount = items.reduce((sum:number, item:any) => sum + item.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
 
   return (
     <div className="header">
@@ -19,7 +21,7 @@ function Header() {
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
-              <h1>React Pizza</h1>
+              <h1>Pizzza</h1>
               <p>Сицилийская пицца</p>
             </div>
           </div>
