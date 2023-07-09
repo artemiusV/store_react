@@ -1,26 +1,30 @@
+import { calcTotalPrice } from './../../utils/calcTotalPrice';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import CartItem from "../../components/Search/CartItem";
+import { getCartFromLS } from "../../utils/getCartFromLS";
 import { RootState } from "../store";
 
 export type CartItem = {
-  id:string;
-  title:string;
-  price:number;
-  imageUrl:string;
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
   type: string;
   size: number;
-  count:number;
+  count: number;
 };
 
 interface CartSliceState {
-  totalPrice:number;
-  items: CartItem[]
+  totalPrice: number;
+  items: CartItem[];
 }
 
-const initialState:CartSliceState = {
-  totalPrice: 0,
-  items: [],
- 
+const {items,totalPrice} = getCartFromLS()
+
+
+const initialState: CartSliceState = {
+  totalPrice,
+  items
 };
 
 const cartSlice = createSlice({
@@ -38,9 +42,8 @@ const cartSlice = createSlice({
           count: 1,
         });
       }
-      state.totalPrice = state.items.reduce((sum, obj) => {
-        return obj.price * obj.count + sum;
-      }, 0);
+
+      state.totalPrice = calcTotalPrice(state.items)
     },
 
     minusItem(state, action: PayloadAction<string>) {
