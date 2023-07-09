@@ -1,10 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSort } from "../redux/slices/filterSlice";
-import {
-  Sort as SortType,
-  SortPropertyEnum,
-} from "../redux/slices/filter/types";
+import { setSort } from "../redux/filter/slice";
+import { Sort as SortType, SortPropertyEnum } from "../redux/filter/types";
 
 type SortItem = {
   name: string;
@@ -41,7 +38,8 @@ export const Sort: React.FC<SortPopupProps> = React.memo(({ value }) => {
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+      const _event = event as PopupClick; //!?!?!?!?!?!?!?!?!?!?!?!!?!/
+      if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
