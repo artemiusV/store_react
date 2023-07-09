@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const search = searchValue ? `search=${searchValue}` : "";
+    const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
       fetchPizzas({
@@ -50,56 +50,9 @@ const Home: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  // Если изменили параметры и был первый рендер
-  // React.useEffect(() => {
-  //   if (isMounted.current) {
-  //     const queryString = qs.stringify({
-  //       sortProperty: sort.sortProperty,
-  //       categoryId,
-  //       currentPage,
-  //     });
-
-  //     navigate(`?${queryString}`);
-  //   }
-  //   isMounted.current = true;
-  // }, [categoryId, sort.sortProperty, currentPage]);
-
   React.useEffect(() => {
     getPizzas();
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-
-  // Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
-  // React.useEffect(() => {
-  //   if (window.location.search) {
-  //     const params = (qs.parse(window.location.search.substring(1)) as unknown) as SearchPizzaParams;
-
-  //     const sort = sortList.find(
-  //       (obj) => obj.sortProperty === params.sortBy
-  //     );
-
-  //     dispatch(
-  //       setFilters({
-  //         searchValue: params.search,
-  //         categoryId: Number(params.category),
-  //         currentPage: Number(params.currentPage),
-  //         sort: sort || sortList[0]
-  //       })
-  //     );
-  //     isSearch.current = true;
-  //   }
-  // }, []);
-
-  // Если был первый рендер, то запрашиваем пиццы
-  // React.useEffect(() => {
-  //   window.scrollTo(0, 0);
-
-  //   // Была ошибка с отображением всех пицц при первой загрузке if (!isSearch.current)
-  //   if (isSearch.current) {
-  //     fetchPizzas({}as SearchPizzaParams);
-  //   }
-
-  //   isSearch.current = false;
-  // }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
